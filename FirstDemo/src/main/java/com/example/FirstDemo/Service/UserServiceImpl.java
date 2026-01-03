@@ -51,6 +51,10 @@ public class UserServiceImpl implements UserService{
         return  UserMapper.toDto(entity);
     }
 
+    loginWIthOtp() {
+        System.out.println("tausif");
+    }
+
     @Override
     public void deleteUser(Long id) {
 
