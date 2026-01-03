@@ -1,7 +1,10 @@
 package com.example.FirstDemo.Service;
 
 import com.example.FirstDemo.Repository.UserRepo;
+import com.example.FirstDemo.dto.UserRequestDto;
+import com.example.FirstDemo.dto.UserResponseDto;
 import com.example.FirstDemo.entity.UserEntity;
+import com.example.FirstDemo.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -15,29 +18,37 @@ public class UserServiceImpl implements UserService{
 
 
     @Override
-    public UserEntity create(UserEntity user) {
-        return userRepo.save(user);
+    public UserResponseDto create(UserRequestDto user) {
+        UserEntity entity = UserMapper.toEntity(user);
+        UserEntity saved =  userRepo.save(entity);
+        return UserMapper.toDto(saved);
     }
 
     @Override
-    public UserEntity findByIdUser(Long id) {
-        return userRepo.findById(id).orElseThrow(() -> new RuntimeException("Id does not exist"));
+    public UserResponseDto findByIdUser(Long id) {
+        UserEntity user = userRepo.findById(id).orElseThrow(() -> new RuntimeException("Id does not exist"));
+        return  UserMapper.toDto(user);
     }
 
     @Override
-    public List<UserEntity> findAll1() {
-        return userRepo.findAll();
+    public List<UserResponseDto> findAll1() {
+
+        return userRepo.findAll()
+                .stream()
+                .map(UserMapper::toDto)
+                .toList();
     }
 
     @Override
-    public UserEntity updateUser(Long id, UserEntity user) {
+    public UserResponseDto updateUser(Long id, UserRequestDto user) {
         UserEntity existingUser = userRepo.findById(id)
                 .orElseThrow(() -> new RuntimeException("Id does not exist"));
 
         existingUser.setName(user.getName());
         existingUser.setCity(user.getCity());
 
-        return userRepo.save(existingUser);
+        UserEntity entity = userRepo.save(existingUser);
+        return  UserMapper.toDto(entity);
     }
 
     @Override
