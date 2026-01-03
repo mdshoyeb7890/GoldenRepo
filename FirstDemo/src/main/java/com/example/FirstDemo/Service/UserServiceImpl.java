@@ -51,7 +51,7 @@ public class UserServiceImpl implements UserService{
         return  UserMapper.toDto(entity);
     }
 
-    
+
 
     @Override
     public void deleteUser(Long id) {
