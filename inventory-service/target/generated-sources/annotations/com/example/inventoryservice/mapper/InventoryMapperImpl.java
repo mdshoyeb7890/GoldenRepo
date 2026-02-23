@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-02-23T11:26:07+0530",
+    date = "2026-02-23T13:57:27+0530",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.10 (Microsoft)"
 )
 @Component
@@ -24,9 +24,7 @@ public class InventoryMapperImpl implements InventoryMapper {
 
         inventoryResponseDto.setId( inventoryEntity.getId() );
         inventoryResponseDto.setProductId( inventoryEntity.getProductId() );
-        if ( inventoryEntity.getProductName() != null ) {
-            inventoryResponseDto.setProductName( String.valueOf( inventoryEntity.getProductName() ) );
-        }
+        inventoryResponseDto.setProductName( inventoryEntity.getProductName() );
         inventoryResponseDto.setQuantity( inventoryEntity.getQuantity() );
         inventoryResponseDto.setReorderLevel( inventoryEntity.getReorderLevel() );
         inventoryResponseDto.setUnitPrice( inventoryEntity.getUnitPrice() );
@@ -45,9 +43,7 @@ public class InventoryMapperImpl implements InventoryMapper {
         InventoryEntity inventoryEntity = new InventoryEntity();
 
         inventoryEntity.setProductId( inventoryRequestDto.getProductId() );
-        if ( inventoryRequestDto.getProductName() != null ) {
-            inventoryEntity.setProductName( Integer.parseInt( inventoryRequestDto.getProductName() ) );
-        }
+        inventoryEntity.setProductName( inventoryRequestDto.getProductName() );
         inventoryEntity.setQuantity( inventoryRequestDto.getQuantity() );
         inventoryEntity.setReorderLevel( inventoryRequestDto.getReorderLevel() );
         inventoryEntity.setUnitPrice( inventoryRequestDto.getUnitPrice() );
@@ -62,12 +58,7 @@ public class InventoryMapperImpl implements InventoryMapper {
         }
 
         inventoryEntity.setProductId( inventoryRequestDto.getProductId() );
-        if ( inventoryRequestDto.getProductName() != null ) {
-            inventoryEntity.setProductName( Integer.parseInt( inventoryRequestDto.getProductName() ) );
-        }
-        else {
-            inventoryEntity.setProductName( null );
-        }
+        inventoryEntity.setProductName( inventoryRequestDto.getProductName() );
         inventoryEntity.setQuantity( inventoryRequestDto.getQuantity() );
         inventoryEntity.setReorderLevel( inventoryRequestDto.getReorderLevel() );
         inventoryEntity.setUnitPrice( inventoryRequestDto.getUnitPrice() );
