@@ -6,10 +6,14 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.UUID;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "inventory")
 @Data
 @NoArgsConstructor
@@ -26,7 +30,7 @@ public class InventoryEntity {
 
     @NotNull
     @Column(nullable = false)
-    private Integer productName;
+    private String productName;
 
     @NotNull
     @Column(nullable = false)
@@ -38,9 +42,11 @@ public class InventoryEntity {
     @Column(nullable = false)
     private Double unitPrice;
 
+    @CreatedDate
     @Column(name= "created_at", nullable = false, updatable = false)
-    private LocalDateTime createdAt;
+    private LocalDateTime createdAt = LocalDateTime.now();
 
+    @LastModifiedDate
     @Column(name= "updated_at")
     private LocalDateTime updatedAt;
 }

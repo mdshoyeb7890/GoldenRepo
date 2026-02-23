@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.*;
 
@@ -27,6 +28,8 @@ public class InventoryServiceImpl implements InventoryService {
     public InventoryResponseDto createInventory(InventoryRequestDto inventoryRequestDto) {
         log.info("Creating inventory for product: {}", inventoryRequestDto.getProductName());
         InventoryEntity entity = inventoryMapper.toEntity(inventoryRequestDto);
+        entity.setCreatedAt(LocalDateTime.now());
+        entity.setUpdatedAt(LocalDateTime.now());
         InventoryEntity savedEntity = inventoryRepository.save(entity);
         log.info("Inventory created with ID: {}", savedEntity.getId());
 
