@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InventoryMapperSpringAdapter.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">inventory-service</a> &gt; <a href="index.source.html" class="el_package">com.example.inventoryservice.mapper</a> &gt; <span class="el_source">InventoryMapperSpringAdapter.java</span></div><h1>InventoryMapperSpringAdapter.java</h1><pre class="source lang-java linenums">package com.example.inventoryservice.mapper;
+
+import com.example.inventoryservice.dto.InventoryRequestDto;
+import com.example.inventoryservice.dto.InventoryResponseDto;
+import com.example.inventoryservice.entity.InventoryEntity;
+import org.springframework.context.annotation.Primary;
+import org.springframework.stereotype.Component;
+
+/**
+ * Explicit Spring bean implementation of {@link InventoryMapper}.
+ * This avoids relying on MapStruct-generated beans at runtime while
+ * keeping the same mapping logic.
+ */
+@Component
+@Primary
+<span class="fc" id="L16">public class InventoryMapperSpringAdapter implements InventoryMapper {</span>
+
+    @Override
+    public InventoryResponseDto toResponseDto(InventoryEntity inventoryEntity) {
+<span class="nc bnc" id="L20" title="All 2 branches missed.">        if (inventoryEntity == null) {</span>
+<span class="nc" id="L21">            return null;</span>
+        }
+
+<span class="nc" id="L24">        InventoryResponseDto dto = new InventoryResponseDto();</span>
+<span class="nc" id="L25">        dto.setId(inventoryEntity.getId());</span>
+<span class="nc" id="L26">        dto.setProductId(inventoryEntity.getProductId());</span>
+<span class="nc" id="L27">        dto.setProductName(inventoryEntity.getProductName());</span>
+<span class="nc" id="L28">        dto.setQuantity(inventoryEntity.getQuantity());</span>
+<span class="nc" id="L29">        dto.setReorderLevel(inventoryEntity.getReorderLevel());</span>
+<span class="nc" id="L30">        dto.setUnitPrice(inventoryEntity.getUnitPrice());</span>
+<span class="nc" id="L31">        dto.setCreatedAt(inventoryEntity.getCreatedAt());</span>
+<span class="nc" id="L32">        dto.setUpdatedAt(inventoryEntity.getUpdatedAt());</span>
+<span class="nc" id="L33">        return dto;</span>
+    }
+
+    @Override
+    public InventoryEntity toEntity(InventoryRequestDto inventoryRequestDto) {
+<span class="nc bnc" id="L38" title="All 2 branches missed.">        if (inventoryRequestDto == null) {</span>
+<span class="nc" id="L39">            return null;</span>
+        }
+
+<span class="nc" id="L42">        InventoryEntity entity = new InventoryEntity();</span>
+<span class="nc" id="L43">        entity.setProductId(inventoryRequestDto.getProductId());</span>
+<span class="nc" id="L44">        entity.setProductName(inventoryRequestDto.getProductName());</span>
+<span class="nc" id="L45">        entity.setQuantity(inventoryRequestDto.getQuantity());</span>
+<span class="nc" id="L46">        entity.setReorderLevel(inventoryRequestDto.getReorderLevel());</span>
+<span class="nc" id="L47">        entity.setUnitPrice(inventoryRequestDto.getUnitPrice());</span>
+<span class="nc" id="L48">        return entity;</span>
+    }
+
+    @Override
+    public void updateEntityFromDto(InventoryRequestDto inventoryRequestDto, InventoryEntity inventoryEntity) {
+<span class="nc bnc" id="L53" title="All 4 branches missed.">        if (inventoryRequestDto == null || inventoryEntity == null) {</span>
+<span class="nc" id="L54">            return;</span>
+        }
+
+<span class="nc" id="L57">        inventoryEntity.setProductId(inventoryRequestDto.getProductId());</span>
+<span class="nc" id="L58">        inventoryEntity.setProductName(inventoryRequestDto.getProductName());</span>
+<span class="nc" id="L59">        inventoryEntity.setQuantity(inventoryRequestDto.getQuantity());</span>
+<span class="nc" id="L60">        inventoryEntity.setReorderLevel(inventoryRequestDto.getReorderLevel());</span>
+<span class="nc" id="L61">        inventoryEntity.setUnitPrice(inventoryRequestDto.getUnitPrice());</span>
+<span class="nc" id="L62">    }</span>
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
