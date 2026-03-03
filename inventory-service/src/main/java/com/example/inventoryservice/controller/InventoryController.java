@@ -5,15 +5,19 @@ import com.example.inventoryservice.dto.InventoryResponseDto;
 import com.example.inventoryservice.service.InventoryService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Slf4j
+
 @RestController
 @RequestMapping("/api/v1/inventory")
 @RequiredArgsConstructor
 public class InventoryController {
+
+    Logger log = LogManager.getLogger(InventoryController.class);
 
     private final InventoryService inventoryService;
 

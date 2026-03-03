@@ -1,0 +1,4 @@
+com/example/inventoryservice/InventoryServiceApplicationTests.class
+com/example/inventoryservice/exception/GlobalExceptionHandlerTest.class
+com/example/inventoryservice/service/InventoryServiceImplTest.class
+com/example/inventoryservice/controller/InventoryControllerTest.class

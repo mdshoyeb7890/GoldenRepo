@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GlobalExceptionHandler.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">inventory-service</a> &gt; <a href="index.source.html" class="el_package">com.example.inventoryservice.exception</a> &gt; <span class="el_source">GlobalExceptionHandler.java</span></div><h1>GlobalExceptionHandler.java</h1><pre class="source lang-java linenums">package com.example.inventoryservice.exception;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.stream.Collectors;
+
+<span class="fc" id="L13">@Slf4j</span>
+@RestControllerAdvice
+<span class="fc" id="L15">public class GlobalExceptionHandler {</span>
+
+    @ExceptionHandler({MethodArgumentNotValidException.class, BindException.class})
+    public ResponseEntity&lt;ErrorResponse&gt; handleValidationException(BindException ex) {
+
+<span class="fc" id="L20">        String message = &quot;Validation failed&quot;;</span>
+
+<span class="pc bpc" id="L22" title="1 of 2 branches missed.">        if (ex.getBindingResult() != null) {</span>
+<span class="fc" id="L23">            message = ex.getBindingResult()</span>
+<span class="fc" id="L24">                    .getFieldErrors()</span>
+<span class="fc" id="L25">                    .stream()</span>
+<span class="fc" id="L26">                    .map(err -&gt; {</span>
+<span class="fc" id="L27">                        String defaultMessage = err.getDefaultMessage();</span>
+<span class="pc bpc" id="L28" title="1 of 2 branches missed.">                        if (defaultMessage == null) {</span>
+<span class="nc" id="L29">                            defaultMessage = &quot;invalid&quot;;</span>
+                        }
+<span class="fc" id="L31">                        return err.getField() + &quot;: &quot; + defaultMessage;</span>
+                    })
+<span class="fc" id="L33">                    .collect(Collectors.joining(&quot;; &quot;));</span>
+        }
+
+<span class="pc bpc" id="L36" title="1 of 2 branches missed.">        if (message.isEmpty()) {</span>
+<span class="nc" id="L37">            message = &quot;Validation failed&quot;;</span>
+        }
+
+<span class="fc" id="L40">        log.error(&quot;Validation failed: {}&quot;, message);</span>
+
+<span class="fc" id="L42">        ErrorResponse errorResponse = new ErrorResponse(</span>
+                &quot;VALIDATION_FAILED&quot;,
+                message,
+<span class="fc" id="L45">                HttpStatus.BAD_REQUEST.value()</span>
+        );
+
+<span class="fc" id="L48">        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);</span>
+    }
+
+    @ExceptionHandler(InventoryNotFoundException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleInventoryNotFoundException(InventoryNotFoundException ex) {
+<span class="fc" id="L53">        log.error(&quot;Inventory not found: {}&quot;, ex.getMessage());</span>
+<span class="fc" id="L54">        ErrorResponse errorResponse = new ErrorResponse(&quot;NOT_FOUND&quot;, ex.getMessage(), HttpStatus.NOT_FOUND.value());</span>
+<span class="fc" id="L55">        return ResponseEntity.status(404).body(errorResponse);</span>
+    }
+
+    @ExceptionHandler(InvalidInventoryDataException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleInvalidInventoryDataException(InvalidInventoryDataException ex) {
+<span class="fc" id="L60">        log.error(&quot;Invalid inventory data: {}&quot;, ex.getMessage());</span>
+<span class="fc" id="L61">        ErrorResponse errorResponse = new ErrorResponse(&quot;INVALID_DATA&quot;, ex.getMessage(), HttpStatus.BAD_REQUEST.value());</span>
+<span class="fc" id="L62">        return ResponseEntity.status(400).body(errorResponse);</span>
+    }
+
+    @ExceptionHandler(InventoryAlreadyExistException.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleInventoryAlreadyExistException(InventoryAlreadyExistException ex) {
+<span class="fc" id="L67">        log.error(&quot;Inventory already exists: {}&quot;, ex.getMessage());</span>
+<span class="fc" id="L68">        ErrorResponse errorResponse = new ErrorResponse(&quot;ALREADY_EXISTS&quot;, ex.getMessage(), HttpStatus.CONFLICT.value());</span>
+<span class="fc" id="L69">        return ResponseEntity.status(409).body(errorResponse);</span>
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity&lt;ErrorResponse&gt; handleGenericException(Exception ex) {
+<span class="fc" id="L74">        log.error(&quot;An unexpected error occurred: {}&quot;, ex.getMessage(), ex);</span>
+<span class="fc" id="L75">        ErrorResponse errorResponse = new ErrorResponse(&quot;INTERNAL_SERVER_ERROR&quot;, &quot;An unexpected error occurred. Please try again later.&quot;, HttpStatus.INTERNAL_SERVER_ERROR.value());</span>
+<span class="fc" id="L76">        return ResponseEntity.status(500).body(errorResponse);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

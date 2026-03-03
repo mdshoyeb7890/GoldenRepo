@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>InventoryServiceImpl.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">inventory-service</a> &gt; <a href="index.source.html" class="el_package">com.example.inventoryservice.service</a> &gt; <span class="el_source">InventoryServiceImpl.java</span></div><h1>InventoryServiceImpl.java</h1><pre class="source lang-java linenums">package com.example.inventoryservice.service;
+
+
+import com.example.inventoryservice.dto.InventoryRequestDto;
+import com.example.inventoryservice.dto.InventoryResponseDto;
+import com.example.inventoryservice.entity.InventoryEntity;
+import com.example.inventoryservice.exception.InventoryNotFoundException;
+import com.example.inventoryservice.mapper.InventoryMapper;
+import com.example.inventoryservice.repository.InventoryRepository;
+import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
+import java.util.List;
+import java.util.stream.*;
+
+
+@Service
+@RequiredArgsConstructor
+public class InventoryServiceImpl implements InventoryService {
+
+    Logger log = LogManager.getLogger(InventoryServiceImpl.class);
+
+    private static final String INVENTORY_NOT_FOUND = &quot;Inventory not found with ID: &quot;;
+
+
+    private final InventoryRepository inventoryRepository;
+
+
+    private final InventoryMapper inventoryMapper;
+
+    @Override
+    public InventoryResponseDto createInventory(InventoryRequestDto inventoryRequestDto) {
+<span class="fc" id="L36">        log.info(&quot;Creating inventory for product: {}&quot;, inventoryRequestDto.getProductName());</span>
+<span class="fc" id="L37">        InventoryEntity entity = inventoryMapper.toEntity(inventoryRequestDto);</span>
+<span class="fc" id="L38">        entity.setCreatedAt(LocalDateTime.now());</span>
+<span class="fc" id="L39">        entity.setUpdatedAt(LocalDateTime.now());</span>
+<span class="fc" id="L40">        InventoryEntity savedEntity = inventoryRepository.save(entity);</span>
+<span class="fc" id="L41">        log.info(&quot;Inventory created with ID: {}&quot;, savedEntity.getId());</span>
+
+<span class="fc" id="L43">        return inventoryMapper.toResponseDto(savedEntity);</span>
+    }
+
+    @Override
+    public InventoryResponseDto getInventoryById(Long id) {
+<span class="fc" id="L48">        log.info(&quot;Fetching inventory with ID: {}&quot;, id);</span>
+<span class="fc" id="L49">        InventoryEntity entity = inventoryRepository.findById(id)</span>
+<span class="fc" id="L50">                .orElseThrow(() -&gt; new InventoryNotFoundException(INVENTORY_NOT_FOUND + id));</span>
+<span class="fc" id="L51">        log.info(&quot;Inventory fetched with ID: {}&quot;, entity.getId());</span>
+<span class="fc" id="L52">        return inventoryMapper.toResponseDto(entity);</span>
+    }
+
+    @Override
+    public List&lt;InventoryResponseDto&gt; getAllInventories() {
+<span class="fc" id="L57">       log.info(&quot;Fetching all inventories&quot;);</span>
+<span class="fc" id="L58">        return inventoryRepository.findAll()</span>
+<span class="fc" id="L59">                .stream()</span>
+<span class="fc" id="L60">                .map(inventoryMapper::toResponseDto)</span>
+<span class="fc" id="L61">                .toList();</span>
+    }
+
+    @Override
+    public InventoryResponseDto updateInventory(Long id, InventoryRequestDto inventoryRequestDto) {
+<span class="fc" id="L66">      log.info(&quot;Updating inventory with ID: {}&quot;, id);</span>
+<span class="fc" id="L67">        InventoryEntity existingEntity = inventoryRepository.findById(id)</span>
+<span class="fc" id="L68">                .orElseThrow(() -&gt; new InventoryNotFoundException(INVENTORY_NOT_FOUND + id));</span>
+<span class="fc" id="L69">        inventoryMapper.updateEntityFromDto(inventoryRequestDto, existingEntity);</span>
+<span class="fc" id="L70">        InventoryEntity updatedEntity = inventoryRepository.save(existingEntity);</span>
+<span class="fc" id="L71">        log.info(&quot;Inventory updated with ID: {}&quot;, updatedEntity.getId());</span>
+<span class="fc" id="L72">        return inventoryMapper.toResponseDto(updatedEntity);</span>
+    }
+
+    @Override
+    public void deleteInventory(Long id) {
+<span class="fc" id="L77">        log.info(&quot;Deleting inventory with ID: {}&quot;, id);</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">        if (!inventoryRepository.existsById(id)) {</span>
+<span class="fc" id="L79">            throw new InventoryNotFoundException(INVENTORY_NOT_FOUND + id);</span>
+        }
+<span class="fc" id="L81">        inventoryRepository.deleteById(id);</span>
+<span class="fc" id="L82">        log.info(&quot;Inventory deleted with ID: {}&quot;, id);</span>
+
+<span class="fc" id="L84">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
