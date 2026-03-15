@@ -8,8 +8,8 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-02-23T13:57:27+0530",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 21.0.10 (Microsoft)"
+    date = "2026-03-09T16:22:50+0530",
+    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.45.0.v20260224-0835, environment: Java 21.0.10 (Eclipse Adoptium)"
 )
 @Component
 public class InventoryMapperImpl implements InventoryMapper {
@@ -22,13 +22,13 @@ public class InventoryMapperImpl implements InventoryMapper {
 
         InventoryResponseDto inventoryResponseDto = new InventoryResponseDto();
 
+        inventoryResponseDto.setCreatedAt( inventoryEntity.getCreatedAt() );
         inventoryResponseDto.setId( inventoryEntity.getId() );
         inventoryResponseDto.setProductId( inventoryEntity.getProductId() );
         inventoryResponseDto.setProductName( inventoryEntity.getProductName() );
         inventoryResponseDto.setQuantity( inventoryEntity.getQuantity() );
         inventoryResponseDto.setReorderLevel( inventoryEntity.getReorderLevel() );
         inventoryResponseDto.setUnitPrice( inventoryEntity.getUnitPrice() );
-        inventoryResponseDto.setCreatedAt( inventoryEntity.getCreatedAt() );
         inventoryResponseDto.setUpdatedAt( inventoryEntity.getUpdatedAt() );
 
         return inventoryResponseDto;
