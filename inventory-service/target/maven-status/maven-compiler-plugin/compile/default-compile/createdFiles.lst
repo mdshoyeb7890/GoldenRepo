@@ -10,6 +10,6 @@ com/example/inventoryservice/service/InventoryServiceImpl.class
 com/example/inventoryservice/repository/InventoryRepository.class
 com/example/inventoryservice/dto/InventoryRequestDto.class
 com/example/inventoryservice/exception/ErrorResponse.class
-com/example/inventoryservice/exception/GlobalExceptionHandler.class
 com/example/inventoryservice/exception/InventoryNotFoundException.class
+com/example/inventoryservice/exception/GlobalExceptionHandler.class
 com/example/inventoryservice/mapper/InventoryMapperSpringAdapter.class

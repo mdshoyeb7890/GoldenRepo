@@ -1,4 +1,5 @@
-/home/deq/Desktop/github clone and practice/GoldenRepo/inventory-service/src/test/java/com/example/inventoryservice/InventoryServiceApplicationTests.java
-/home/deq/Desktop/github clone and practice/GoldenRepo/inventory-service/src/test/java/com/example/inventoryservice/controller/InventoryControllerTest.java
-/home/deq/Desktop/github clone and practice/GoldenRepo/inventory-service/src/test/java/com/example/inventoryservice/exception/GlobalExceptionHandlerTest.java
-/home/deq/Desktop/github clone and practice/GoldenRepo/inventory-service/src/test/java/com/example/inventoryservice/service/InventoryServiceImplTest.java
+/Users/mshoyeb/Desktop/golden project/GoldenRepo/inventory-service/src/test/java/com/example/inventoryservice/InventoryServiceApplicationTests.java
+/Users/mshoyeb/Desktop/golden project/GoldenRepo/inventory-service/src/test/java/com/example/inventoryservice/controller/InventoryControllerTest.java
+/Users/mshoyeb/Desktop/golden project/GoldenRepo/inventory-service/src/test/java/com/example/inventoryservice/exception/GlobalExceptionHandlerTest.java
+/Users/mshoyeb/Desktop/golden project/GoldenRepo/inventory-service/src/test/java/com/example/inventoryservice/karate/InventoryKarateRunner.java
+/Users/mshoyeb/Desktop/golden project/GoldenRepo/inventory-service/src/test/java/com/example/inventoryservice/service/InventoryServiceImplTest.java
