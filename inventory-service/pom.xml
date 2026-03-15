@@ -30,6 +30,7 @@
 		<java.version>17</java.version>
 		<mapstruct.version>1.5.5.Final</mapstruct.version>
 		<jacoco.version>0.8.11</jacoco.version>
+		<jacoco.skip>false</jacoco.skip>
 		<!-- SonarQube -->
 		<sonar.projectKey>inventory-service</sonar.projectKey>
 		<sonar.projectName>inventory-service</sonar.projectName>
@@ -112,11 +113,30 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-logging</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webmvc-test</artifactId>
 			<scope>test</scope>
+		</dependency>
+		<!-- Karate API tests (io.karatelabs 1.5.x for Java 17+) -->
+		<dependency>
+			<groupId>io.karatelabs</groupId>
+			<artifactId>karate-junit5</artifactId>
+			<version>1.5.2</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>ch.qos.logback</groupId>
+					<artifactId>logback-classic</artifactId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 
 	</dependencies>
@@ -144,6 +164,7 @@
 							<goal>prepare-agent</goal>
 						</goals>
 						<configuration>
+							<skip>${jacoco.skip}</skip>
 							<destFile>${project.build.directory}/jacoco.exec</destFile>
 						</configuration>
 					</execution>
