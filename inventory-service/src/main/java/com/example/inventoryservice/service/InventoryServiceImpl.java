@@ -8,19 +8,26 @@ import com.example.inventoryservice.exception.InventoryNotFoundException;
 import com.example.inventoryservice.mapper.InventoryMapper;
 import com.example.inventoryservice.repository.InventoryRepository;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.*;
 
-@Slf4j
+
 @Service
 @RequiredArgsConstructor
 public class InventoryServiceImpl implements InventoryService {
 
+    Logger log = LogManager.getLogger(InventoryServiceImpl.class);
+
+    private static final String INVENTORY_NOT_FOUND = "Inventory not found with ID: ";
+
+
     private final InventoryRepository inventoryRepository;
+
 
     private final InventoryMapper inventoryMapper;
 
@@ -40,8 +47,7 @@ public class InventoryServiceImpl implements InventoryService {
     public InventoryResponseDto getInventoryById(Long id) {
         log.info("Fetching inventory with ID: {}", id);
         InventoryEntity entity = inventoryRepository.findById(id)
-                .orElseThrow(() -> new InventoryNotFoundException("Inventory not found with ID: " + id));
-//        InventoryEntity savedEntity = inventoryRepository.save(entity);
+                .orElseThrow(() -> new InventoryNotFoundException(INVENTORY_NOT_FOUND + id));
         log.info("Inventory fetched with ID: {}", entity.getId());
         return inventoryMapper.toResponseDto(entity);
     }
@@ -59,7 +65,7 @@ public class InventoryServiceImpl implements InventoryService {
     public InventoryResponseDto updateInventory(Long id, InventoryRequestDto inventoryRequestDto) {
       log.info("Updating inventory with ID: {}", id);
         InventoryEntity existingEntity = inventoryRepository.findById(id)
-                .orElseThrow(() -> new InventoryNotFoundException("Inventory not found with ID: " + id));
+                .orElseThrow(() -> new InventoryNotFoundException(INVENTORY_NOT_FOUND + id));
         inventoryMapper.updateEntityFromDto(inventoryRequestDto, existingEntity);
         InventoryEntity updatedEntity = inventoryRepository.save(existingEntity);
         log.info("Inventory updated with ID: {}", updatedEntity.getId());
@@ -70,7 +76,7 @@ public class InventoryServiceImpl implements InventoryService {
     public void deleteInventory(Long id) {
         log.info("Deleting inventory with ID: {}", id);
         if (!inventoryRepository.existsById(id)) {
-            throw new InventoryNotFoundException("Inventory not found with ID: " + id);
+            throw new InventoryNotFoundException(INVENTORY_NOT_FOUND + id);
         }
         inventoryRepository.deleteById(id);
         log.info("Inventory deleted with ID: {}", id);
