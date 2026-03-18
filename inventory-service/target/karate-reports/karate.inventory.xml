@@ -1,0 +1,62 @@
+<testsuite failures="0" name="karate/inventory.feature" skipped="0" tests="6" time="0.29349"><testcase classname="karate.inventory" name="Create inventory successfully" time="0.192865"><system-out>* url baseUrl ............................................................. passed
+* path apiPath ............................................................ passed
+* header Content-Type = 'application/json' ................................ passed
+Given request ............................................................. passed
+When method post .......................................................... passed
+Then status 200 ........................................................... passed
+And match response.id == '#number' ........................................ passed
+And match response.productId == 'PROD-KARATE-001' ......................... passed
+And match response.productName == 'Karate Test Product' ................... passed
+And match response.quantity == 100 ........................................ passed
+And match response.reorderLevel == 10 ..................................... passed
+And match response.unitPrice == 29.99 ..................................... passed
+And match response.createdAt == '#notnull' ................................ passed
+And match response.updatedAt == '#notnull' ................................ passed
+</system-out></testcase>
+<testcase classname="karate.inventory" name="Get all inventories" time="0.060715"><system-out>* url baseUrl ............................................................. passed
+* path apiPath ............................................................ passed
+* header Content-Type = 'application/json' ................................ passed
+When method get ........................................................... passed
+Then status 200 ........................................................... passed
+And match response == '#[]#' .............................................. passed
+</system-out></testcase>
+<testcase classname="karate.inventory" name="Get inventory by id (create then get) using reusable call" time="0.022321"><system-out>* url baseUrl ............................................................. passed
+* path apiPath ............................................................ passed
+* header Content-Type = 'application/json' ................................ passed
+* def result = call read('create-inventory.feature') ...................... passed
+* def idToGet = result.createdId .......................................... passed
+Given path idToGet ........................................................ passed
+When method get ........................................................... passed
+Then status 200 ........................................................... passed
+And match response.id == idToGet .......................................... passed
+And match response.productName == 'Shared Product' ........................ passed
+</system-out></testcase>
+<testcase classname="karate.inventory" name="Create inventory - validation failure (empty productId)" time="0.009077"><system-out>* url baseUrl ............................................................. passed
+* path apiPath ............................................................ passed
+* header Content-Type = 'application/json' ................................ passed
+Given request ............................................................. passed
+When method post .......................................................... passed
+Then status 400 ........................................................... passed
+And match response.errorCode == 'VALIDATION_FAILED' ....................... passed
+And match response.message != null ........................................ passed
+And match response.status == 400 .......................................... passed
+</system-out></testcase>
+<testcase classname="karate.inventory" name="Create inventory - validation failure (negative quantity)" time="0.004019"><system-out>* url baseUrl ............................................................. passed
+* path apiPath ............................................................ passed
+* header Content-Type = 'application/json' ................................ passed
+Given request ............................................................. passed
+When method post .......................................................... passed
+Then status 400 ........................................................... passed
+And match response.errorCode == 'VALIDATION_FAILED' ....................... passed
+And match response.status == 400 .......................................... passed
+</system-out></testcase>
+<testcase classname="karate.inventory" name="Get inventory by id - not found" time="0.004493"><system-out>* url baseUrl ............................................................. passed
+* path apiPath ............................................................ passed
+* header Content-Type = 'application/json' ................................ passed
+* path '99999' ............................................................ passed
+When method get ........................................................... passed
+Then status 404 ........................................................... passed
+And match response.errorCode == 'NOT_FOUND' ............................... passed
+And match response.status == 404 .......................................... passed
+</system-out></testcase>
+</testsuite>

@@ -1,0 +1,32 @@
+<!DOCTYPE HTML>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"/>
+    <title>Karate Timeline</title>
+    <style>
+      body, html { font-family: arial, sans-serif; font-size: 11pt; }
+      #visualization { box-sizing: border-box; width: 100%; height: 300px; }
+      .vis-item.failed { background-color: #F2928C; }
+      .page-heading { padding: 0.5em; margin-bottom: 0.5em; background-color: lightcyan; border: 1px solid gray; }
+    </style>
+    <script src="res/vis.min.js"></script>
+    <link href="res/vis.min.css" rel="stylesheet" type="text/css" />
+  </head>
+  <body>
+    <div class="page-heading">
+      <a href="karate-summary.html">Summary</a>
+    </div>     
+    <div id="visualization"></div>
+    <script>
+var groups = [{"content":"main","id":1}];
+var items = [{"id":1,"group":1,"content":"karate/inventory[1:8]","start":1773735380575,"end":1773735380815,"title":"karate/inventory[1:8] 13:46:20.575-13:46:20.815 Create inventory successfully"},{"id":2,"group":1,"content":"karate/inventory[2:30]","start":1773735380819,"end":1773735380880,"title":"karate/inventory[2:30] 13:46:20.819-13:46:20.880 Get all inventories"},{"id":3,"group":1,"content":"karate/inventory[3:35]","start":1773735380883,"end":1773735380905,"title":"karate/inventory[3:35] 13:46:20.883-13:46:20.905 Get inventory by id (create then get) using reusable call"},{"id":4,"group":1,"content":"karate/inventory[4:47]","start":1773735380908,"end":1773735380917,"title":"karate/inventory[4:47] 13:46:20.908-13:46:20.917 Create inventory - validation failure (empty productId)"},{"id":5,"group":1,"content":"karate/inventory[5:64]","start":1773735380919,"end":1773735380923,"title":"karate/inventory[5:64] 13:46:20.919-13:46:20.923 Create inventory - validation failure (negative quantity)"},{"id":6,"group":1,"content":"karate/inventory[6:80]","start":1773735380925,"end":1773735380929,"title":"karate/inventory[6:80] 13:46:20.925-13:46:20.929 Get inventory by id - not found"}];
+</script>
+    <script>
+      var container = document.getElementById('visualization');
+      var timeline = new vis.Timeline(container);
+      timeline.setOptions({groupOrder: 'content'});
+      timeline.setGroups(new vis.DataSet(groups));
+      timeline.setItems(new vis.DataSet(items));
+    </script>
+  </body>
+</html>

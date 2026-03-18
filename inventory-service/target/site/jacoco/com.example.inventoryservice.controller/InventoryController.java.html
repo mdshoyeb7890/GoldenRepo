@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 @RestController
 @RequestMapping(&quot;/api/v1/inventory&quot;)
@@ -23,16 +24,23 @@ public class InventoryController {
 
     @PostMapping
     public ResponseEntity&lt;InventoryResponseDto&gt; createInventory(@Valid @RequestBody InventoryRequestDto  inventoryRequestDto) {
-<span class="fc" id="L26">        log.info(&quot;Received request to create inventory for product: {}&quot;, inventoryRequestDto.getProductName());</span>
-<span class="fc" id="L27">        InventoryResponseDto createdInventory = inventoryService.createInventory(inventoryRequestDto);</span>
-<span class="fc" id="L28">        return ResponseEntity.ok(createdInventory);</span>
+<span class="fc" id="L27">        log.info(&quot;Received request to create inventory for product: {}&quot;, inventoryRequestDto.getProductName());</span>
+<span class="fc" id="L28">        InventoryResponseDto createdInventory = inventoryService.createInventory(inventoryRequestDto);</span>
+<span class="fc" id="L29">        return ResponseEntity.ok(createdInventory);</span>
+    }
+
+    @GetMapping
+    public ResponseEntity&lt;List&lt;InventoryResponseDto&gt;&gt; getAllInventories() {
+<span class="fc" id="L34">        log.info(&quot;Received request to fetch all inventories&quot;);</span>
+<span class="fc" id="L35">        List&lt;InventoryResponseDto&gt; inventories = inventoryService.getAllInventories();</span>
+<span class="fc" id="L36">        return ResponseEntity.ok(inventories);</span>
     }
 
     @GetMapping(&quot;/{id}&quot;)
     public ResponseEntity&lt;InventoryResponseDto&gt; getInventoryById(@PathVariable Long id) {
-<span class="fc" id="L33">        log.info(&quot;Received request to fetch inventory with ID: {}&quot;, id);</span>
-<span class="fc" id="L34">        InventoryResponseDto inventoryResponseDto = inventoryService.getInventoryById(id);</span>
-<span class="fc" id="L35">        return ResponseEntity.ok(inventoryResponseDto);</span>
+<span class="fc" id="L41">        log.info(&quot;Received request to fetch inventory with ID: {}&quot;, id);</span>
+<span class="fc" id="L42">        InventoryResponseDto inventoryResponseDto = inventoryService.getInventoryById(id);</span>
+<span class="fc" id="L43">        return ResponseEntity.ok(inventoryResponseDto);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

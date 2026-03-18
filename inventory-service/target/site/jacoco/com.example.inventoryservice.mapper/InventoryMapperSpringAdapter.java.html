@@ -17,35 +17,35 @@ import org.springframework.stereotype.Component;
 
     @Override
     public InventoryResponseDto toResponseDto(InventoryEntity inventoryEntity) {
-<span class="nc bnc" id="L20" title="All 2 branches missed.">        if (inventoryEntity == null) {</span>
+<span class="pc bpc" id="L20" title="1 of 2 branches missed.">        if (inventoryEntity == null) {</span>
 <span class="nc" id="L21">            return null;</span>
         }
 
-<span class="nc" id="L24">        InventoryResponseDto dto = new InventoryResponseDto();</span>
-<span class="nc" id="L25">        dto.setId(inventoryEntity.getId());</span>
-<span class="nc" id="L26">        dto.setProductId(inventoryEntity.getProductId());</span>
-<span class="nc" id="L27">        dto.setProductName(inventoryEntity.getProductName());</span>
-<span class="nc" id="L28">        dto.setQuantity(inventoryEntity.getQuantity());</span>
-<span class="nc" id="L29">        dto.setReorderLevel(inventoryEntity.getReorderLevel());</span>
-<span class="nc" id="L30">        dto.setUnitPrice(inventoryEntity.getUnitPrice());</span>
-<span class="nc" id="L31">        dto.setCreatedAt(inventoryEntity.getCreatedAt());</span>
-<span class="nc" id="L32">        dto.setUpdatedAt(inventoryEntity.getUpdatedAt());</span>
-<span class="nc" id="L33">        return dto;</span>
+<span class="fc" id="L24">        InventoryResponseDto dto = new InventoryResponseDto();</span>
+<span class="fc" id="L25">        dto.setId(inventoryEntity.getId());</span>
+<span class="fc" id="L26">        dto.setProductId(inventoryEntity.getProductId());</span>
+<span class="fc" id="L27">        dto.setProductName(inventoryEntity.getProductName());</span>
+<span class="fc" id="L28">        dto.setQuantity(inventoryEntity.getQuantity());</span>
+<span class="fc" id="L29">        dto.setReorderLevel(inventoryEntity.getReorderLevel());</span>
+<span class="fc" id="L30">        dto.setUnitPrice(inventoryEntity.getUnitPrice());</span>
+<span class="fc" id="L31">        dto.setCreatedAt(inventoryEntity.getCreatedAt());</span>
+<span class="fc" id="L32">        dto.setUpdatedAt(inventoryEntity.getUpdatedAt());</span>
+<span class="fc" id="L33">        return dto;</span>
     }
 
     @Override
     public InventoryEntity toEntity(InventoryRequestDto inventoryRequestDto) {
-<span class="nc bnc" id="L38" title="All 2 branches missed.">        if (inventoryRequestDto == null) {</span>
+<span class="pc bpc" id="L38" title="1 of 2 branches missed.">        if (inventoryRequestDto == null) {</span>
 <span class="nc" id="L39">            return null;</span>
         }
 
-<span class="nc" id="L42">        InventoryEntity entity = new InventoryEntity();</span>
-<span class="nc" id="L43">        entity.setProductId(inventoryRequestDto.getProductId());</span>
-<span class="nc" id="L44">        entity.setProductName(inventoryRequestDto.getProductName());</span>
-<span class="nc" id="L45">        entity.setQuantity(inventoryRequestDto.getQuantity());</span>
-<span class="nc" id="L46">        entity.setReorderLevel(inventoryRequestDto.getReorderLevel());</span>
-<span class="nc" id="L47">        entity.setUnitPrice(inventoryRequestDto.getUnitPrice());</span>
-<span class="nc" id="L48">        return entity;</span>
+<span class="fc" id="L42">        InventoryEntity entity = new InventoryEntity();</span>
+<span class="fc" id="L43">        entity.setProductId(inventoryRequestDto.getProductId());</span>
+<span class="fc" id="L44">        entity.setProductName(inventoryRequestDto.getProductName());</span>
+<span class="fc" id="L45">        entity.setQuantity(inventoryRequestDto.getQuantity());</span>
+<span class="fc" id="L46">        entity.setReorderLevel(inventoryRequestDto.getReorderLevel());</span>
+<span class="fc" id="L47">        entity.setUnitPrice(inventoryRequestDto.getUnitPrice());</span>
+<span class="fc" id="L48">        return entity;</span>
     }
 
     @Override

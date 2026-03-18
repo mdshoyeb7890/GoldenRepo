@@ -4,6 +4,8 @@ import com.example.inventoryservice.dto.InventoryRequestDto;
 import com.example.inventoryservice.dto.InventoryResponseDto;
 import com.example.inventoryservice.entity.InventoryEntity;
 
+
+
 public interface InventoryMapper {
 
     InventoryResponseDto toResponseDto(InventoryEntity inventoryEntity);

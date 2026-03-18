@@ -9,11 +9,11 @@
         </Console>
 
         <!-- Splunk HTTP Event Collector appender (Log4j2) -->
-        <!-- Plugin name is SplunkHttp, implemented by HttpEventCollectorLog4jAppender in splunk-library-javalogging -->
+        <!-- Override via env: SPLUNK_HEC_URL, SPLUNK_HEC_TOKEN (optional, for production) -->
         <SplunkHttp
                 name="Splunk"
-                url="http://localhost:8088/services/collector"
-                token="8127492c-a7c7-4d62-98dd-238ba0e4b99f"
+                url="${env:SPLUNK_HEC_URL:-http://localhost:8088/services/collector}"
+                token="${env:SPLUNK_HEC_TOKEN:-8127492c-a7c7-4d62-98dd-238ba0e4b99f}"
                 index="inventory_api_dev"
                 source="inventory-service"
                 sourcetype="spring-boot"
