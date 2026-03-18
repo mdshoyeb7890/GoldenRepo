@@ -11,6 +11,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/inventory")
@@ -26,6 +27,13 @@ public class InventoryController {
         log.info("Received request to create inventory for product: {}", inventoryRequestDto.getProductName());
         InventoryResponseDto createdInventory = inventoryService.createInventory(inventoryRequestDto);
         return ResponseEntity.ok(createdInventory);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<InventoryResponseDto>> getAllInventories() {
+        log.info("Received request to fetch all inventories");
+        List<InventoryResponseDto> inventories = inventoryService.getAllInventories();
+        return ResponseEntity.ok(inventories);
     }
 
     @GetMapping("/{id}")

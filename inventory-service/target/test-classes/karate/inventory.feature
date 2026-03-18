@@ -27,27 +27,22 @@ Feature: Inventory API
     And match response.createdAt == '#notnull'
     And match response.updatedAt == '#notnull'
 
-  Scenario: Get inventory by id (create then get)
-    Given request
-    """
-    {
-      "productId": "PROD-GET-001",
-      "productName": "Get Test Product",
-      "quantity": 50,
-      "reorderLevel": 5,
-      "unitPrice": 19.99
-    }
-    """
-    When method post
-    Then status 200
-    * def createdId = response.id
-    * path apiPath, createdId
+  Scenario: Get all inventories
     When method get
     Then status 200
-    And match response.id == createdId
-    And match response.productId == 'PROD-GET-001'
-    And match response.productName == 'Get Test Product'
-    And match response.quantity == 50
+    And match response == '#[]#'
+
+  Scenario: Get inventory by id (create then get) using reusable call
+    # call the other feature and capture the result
+    * def result = call read('create-inventory.feature')
+    * def idToGet = result.createdId
+
+    Given path idToGet
+    When method get
+    Then status 200
+    And match response.id == idToGet
+    And match response.productName == 'Shared Product'
+
 
   Scenario: Create inventory - validation failure (empty productId)
     Given request
@@ -83,8 +78,7 @@ Feature: Inventory API
     And match response.status == 400
 
   Scenario: Get inventory by id - not found
-    * url baseUrl
-    * path 'api', 'v1', 'inventory', '99999'
+    * path '99999'
     When method get
     Then status 404
     And match response.errorCode == 'NOT_FOUND'

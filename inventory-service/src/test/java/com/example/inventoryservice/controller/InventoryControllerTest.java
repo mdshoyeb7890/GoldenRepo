@@ -15,6 +15,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
@@ -74,6 +75,39 @@ class InventoryControllerTest {
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(invalidJson))
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    @DisplayName("GET /api/v1/inventory should return all inventories and 200")
+    void getAllInventories_shouldReturnOk() throws Exception {
+        InventoryResponseDto item = new InventoryResponseDto(
+                1L,
+                "PROD-001",
+                "Test Product",
+                100,
+                10,
+                29.99,
+                LocalDateTime.now(),
+                LocalDateTime.now()
+        );
+        when(inventoryService.getAllInventories()).thenReturn(List.of(item));
+
+        mockMvc.perform(get("/api/v1/inventory"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(1))
+                .andExpect(jsonPath("$[0].id").value(1))
+                .andExpect(jsonPath("$[0].productId").value("PROD-001"))
+                .andExpect(jsonPath("$[0].productName").value("Test Product"));
+    }
+
+    @Test
+    @DisplayName("GET /api/v1/inventory should return empty list when no inventories")
+    void getAllInventories_whenEmpty_shouldReturnOkWithEmptyList() throws Exception {
+        when(inventoryService.getAllInventories()).thenReturn(List.of());
+
+        mockMvc.perform(get("/api/v1/inventory"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(0));
     }
 
     @Test

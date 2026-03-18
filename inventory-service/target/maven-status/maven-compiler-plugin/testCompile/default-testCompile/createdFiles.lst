@@ -1,5 +1,5 @@
 com/example/inventoryservice/InventoryServiceApplicationTests.class
+com/example/inventoryservice/karate/InventoryKarateTest.class
 com/example/inventoryservice/service/InventoryServiceImplTest.class
 com/example/inventoryservice/controller/InventoryControllerTest.class
 com/example/inventoryservice/exception/GlobalExceptionHandlerTest.class
-com/example/inventoryservice/karate/InventoryKarateRunner.class
