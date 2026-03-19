@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- Set status="DEBUG" temporarily to see Splunk appender errors in console; then set back to WARN -->
 <Configuration status="WARN">
 
     <Appenders>
